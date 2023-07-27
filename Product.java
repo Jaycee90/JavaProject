@@ -15,7 +15,9 @@ public class Product {
     /**
      * 
      */
-    public void Port1;
+    public void Port1(){
+        
+    }
 
     /**
      * 

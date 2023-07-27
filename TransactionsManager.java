@@ -15,7 +15,7 @@ public class TransactionsManager {
     /**
      * @param Transaction tr
      */
-    public void addTransaction(void Transaction tr) {
+    public void addTransaction(Transaction transaction) {
         // TODO implement here
     }
 
@@ -23,7 +23,7 @@ public class TransactionsManager {
      * @param String fileName 
      * @param String transaction
      */
-    public void appendToFile(void String fileName, void String transaction) {
+    public void appendToFile(String fileName, String transaction) {
         // TODO implement here
     }
 

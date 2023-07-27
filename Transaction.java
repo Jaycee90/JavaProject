@@ -10,6 +10,7 @@ public class Transaction {
      * Default constructor
      */
     public Transaction() {
+        productList = new HashMap<>();
     }
 
     /**
@@ -25,13 +26,13 @@ public class Transaction {
     /**
      * 
      */
-    private Map<Product> productList;
+    private Map<Product, Integer> productList;
 
     /**
-     * @param Product pr 
+     * @param Product product 
      * @param int numberOfItems
      */
-    public void addProduct(void Product pr, void int numberOfItems) {
+    public void addProduct(Product product, int numberOfItems) {
         // TODO implement here
     }
 
