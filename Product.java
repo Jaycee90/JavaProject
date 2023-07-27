@@ -34,4 +34,16 @@ public class Product {
      */
     private int numberOfItems;
 
+    /**
+     * 
+     * @param numberOfItems
+     */
+    public void setNumberOfItems(int numberOfItems) {
+        this.numberOfItems = numberOfItems;
+    }
+
+    public int getNumberOfItems() {
+        return numberOfItems;
+    }
+
 }
