@@ -20,6 +20,7 @@ public class OutgoingTransaction extends Transaction {
     /**
      * 
      */
+    @Override
     public void updateProductStock() {
         // TODO implement here
     }
