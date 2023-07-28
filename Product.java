@@ -6,33 +6,21 @@ import java.util.*;
  */
 public class Product {
 
+    private int ID;
+    private String name;
+    private int numberOfItems;
+
     /**
      * Default constructor
      */
     public Product() {
     }
 
-    /**
-     * 
-     */
-    public void Port1(){
-        
+    //Constructor with arguments
+    public Product(int ID, String name){
+        this.ID = ID;
+        this.name = name;
     }
-
-    /**
-     * 
-     */
-    private int ID;
-
-    /**
-     * 
-     */
-    private String name;
-
-    /**
-     * 
-     */
-    private int numberOfItems;
 
     /**
      * 
@@ -46,4 +34,19 @@ public class Product {
         return numberOfItems;
     }
 
+    public String getName(){
+        return name;
+    }
+
+    public int getID(){
+        return ID;
+    }
+
+    public int getQuantitySentToStore(int storeID){
+        // Implement the logic to get the quantity of this product sent
+        // to the store with the given storeID, I will access the 
+        //stock manager to retrieve this information
+        // just return 0 for now.
+        return 0;
+    }
 }
