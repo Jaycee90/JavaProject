@@ -1,4 +1,6 @@
 package store_info;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -38,7 +40,13 @@ public class TransactionsManager {
      * the transaction information to be appended.
      */
     public void appendToFile(String fileName, String transaction) {
-        // TODO implement here
-    }
-
+        try {
+            FileWriter fileWriter = new FileWriter(fileName, true);
+            fileWriter.write(transaction + "\n");
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+}
 }
