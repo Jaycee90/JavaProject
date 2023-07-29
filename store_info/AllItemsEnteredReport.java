@@ -3,6 +3,8 @@ package store_info;
 //import java.util.*;
 import java.util.List;
 import java.util.Map;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * 
@@ -25,21 +27,24 @@ public class AllItemsEnteredReport implements Report {
     @Override
     public void printReport() {
         List<Transaction> transactions = transactionsManager.getTransactions();
-        System.out.println("All Items Entered Report:");
-
-        for (Transaction transaction : transactions){
-            if (transaction instanceof IncomingTransaction){
-                System.out.println("Transasction ID: " + transaction.getID());
-                System.out.println("Date: " + transaction.getDate());
-                System.out.println("Products: ");
-                for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()){
-                    Product product = entry.getKey();
-                    int numberOfItems = entry.getValue();
-                    System.out.println(product.getName() + "(ID: " + product.getID() + ") -Quantity: " + numberOfItems);
-
+        try (FileWriter fileWriter = new FileWriter("AllItemsEnteredReport.txt")) {
+            fileWriter.write("All Items Entered Report:\n");
+            for (Transaction transaction : transactions){
+                if (transaction instanceof IncomingTransaction){
+                    fileWriter.write("Transasction ID: " + transaction.getID() + "\n");
+                    fileWriter.write("Date: " + transaction.getDate() + "\n");
+                    fileWriter.write("Products:\n");
+                    for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()){
+                        Product product = entry.getKey();
+                        int numberOfItems = entry.getValue();
+                        fileWriter.write(product.getName() + "(ID: " + product.getID() + ") -Quantity: " + numberOfItems + "\n");
+                    }
+                    fileWriter.write("-----------------------------------\n");
                 }
-                System.out.println("-----------------------------------");
             }
+            System.out.println("Report saved to AllItemsEnteredReport.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,12 +1,14 @@
+
 package store_info;
-import java.util.*;
+
+import java.util.Date;
+import java.util.Scanner;
 
 /**
  * The Main class represents the entry point of the store 
  * information system. It contains references to various 
  * managers responsible for managing different aspects of the store.
  */
-
 public class Main {
 
     public static void main(String[] args) {
@@ -15,7 +17,10 @@ public class Main {
         ReportsManager reportsManager = new ReportsManager();
         TransactionsManager transactionsManager = new TransactionsManager();
 
-        // Create a scanner object to read user input
+        // Generate reports and save to .txt files
+        Report availableItemsReport = new AvailableItemsReport(stockManager);
+        Report allItemsEnteredReport = new AllItemsEnteredReport(transactionsManager);
+
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -52,20 +57,66 @@ public class Main {
 
                 case "i":
                     // Perform incoming transaction
-                    // Implementation code here...
+                    System.out.println("List of available products for the transaction:");
+                    for (Product prod : stockManager.getProducts()) {
+                        System.out.println(prod.getID() + ": " + prod.getName());
+                    }
+
+                    System.out.print("Select a product: ");
+                    int productID = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Enter product quantity: ");
+                    int quantity = Integer.parseInt(scanner.nextLine());
+
+                    // Get the selected product and create an incoming transaction
+                    Product selectedProduct = stockManager.getProductByID(productID);
+                    if (selectedProduct == null) {
+                        System.out.println("Invalid product ID. Transaction canceled.");
+                    } else {
+                        IncomingTransaction incomingTransaction = new IncomingTransaction(transactionsManager.getNextTransactionID(), new Date());
+                        incomingTransaction.addProduct(selectedProduct, quantity);
+                        transactionsManager.addTransaction(incomingTransaction);
+                        System.out.println("Incoming transaction successfully added!");
+                    }
                     break;
 
                 case "o":
                     // Perform outgoing transaction
-                    // Implementation code here...
+                    System.out.println("List of available stores for the transaction:");
+                    for (Store myStore : stockManager.getStores()) {
+                        System.out.println(myStore.getID() + ": " + myStore.getName());
+                    }
+
+                    System.out.print("Select a store: ");
+                    int storeID = Integer.parseInt(scanner.nextLine());
+
+                    System.out.println("List of available products for the transaction:");
+                    for (Product prod : stockManager.getProducts()) {
+                        System.out.println(prod.getID() + ": " + prod.getName());
+                    }
+
+                    System.out.print("Select a product: ");
+                    productID = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Enter product quantity: ");
+                    quantity = Integer.parseInt(scanner.nextLine());
+
+                    // Get the selected store and product and create an outgoing transaction
+                    Store selectedStore = stockManager.getStoreByID(storeID);
+                    selectedProduct = stockManager.getProductByID(productID);
+                    if (selectedStore == null || selectedProduct == null) {
+                        System.out.println("Invalid store ID or product ID. Transaction canceled.");
+                    } else {
+                        OutgoingTransaction outgoingTransaction = new OutgoingTransaction(transactionsManager.getNextTransactionID(), new Date());
+                        outgoingTransaction.addProduct(selectedProduct, quantity);
+                        transactionsManager.addTransaction(outgoingTransaction);
+                        System.out.println("Outgoing transaction successfully added!");
+                    }
                     break;
 
                 case "r":
                     System.out.println("Generating reports...");
                     // Generate reports
-                    Report availableItemsReport = new AvailableItemsReport(stockManager);
-                    Report allItemsEnteredReport = new AllItemsEnteredReport(transactionsManager);
-
                     reportsManager.generateReport(availableItemsReport);
                     reportsManager.generateReport(allItemsEnteredReport);
                     // You can add more reports here if needed

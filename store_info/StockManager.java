@@ -82,4 +82,22 @@ public class StockManager {
     public List<Transaction> getTransactions() {
         return transactions;
     }
+
+    public Product getProductByID(int productID) {
+        for (Product product : products) {
+            if (product.getID() == productID) {
+                return product;
+            }
+        }
+        return null;
+    }
+    
+    public Store getStoreByID(int storeID) {
+        for (Store store : stores) {
+            if (store.getID() == storeID) {
+                return store;
+            }
+        }
+        return null;
+    }
 }
