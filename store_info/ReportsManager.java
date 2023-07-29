@@ -24,4 +24,31 @@ public class ReportsManager {
         report.printReport();
     }
 
+    /**
+     * Generate a report of all items entered in the inventory.
+     * @param transactionsManager The TransactionsManager object to retrieve the transactions.
+     */
+    public void generateAllItemsEnteredReport(TransactionsManager transactionsManager) {
+        Report allItemsEnteredReport = new AllItemsEnteredReport(transactionsManager);
+        generateReport(allItemsEnteredReport);
+    }
+
+    /**
+     * Generate a report of available items in the inventory.
+     * @param stockManager The StockManager object to retrieve the products.
+     */
+    public void generateAvailableItemsReport(StockManager stockManager) {
+        Report availableItemsReport = new AvailableItemsReport(stockManager);
+        generateReport(availableItemsReport);
+    }
+
+    /**
+     * Generate a report of products sent to a specific store.
+     * @param stockManager The StockManager object to retrieve the products.
+     * @param store The Store object representing the store.
+     */
+    public void generateProductByStoreReport(StockManager stockManager, Store store) {
+        Report productByStoreReport = new ProductByStoreReport(stockManager, store);
+        generateReport(productByStoreReport);
+    }
 }

@@ -2,7 +2,8 @@ package store_info;
 import java.util.*;
 
 /**
- * 
+ * This class represents a store in the inventory management system.
+ * It contains information about the store, such as ID, name, and address.
  */
 public class Store {
 
@@ -16,23 +17,22 @@ public class Store {
     public Store() {
     }
 
-    //Constructor with arguments
-    public Store (int ID, String name, String address){
+    // Constructor with arguments
+    public Store(int ID, String name, String address) {
         this.ID = ID;
         this.name = name;
         this.address = address;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public int getID(){
+    public int getID() {
         return ID;
     }
 
-    public String getAddress(){
+    public String getAddress() {
         return address;
     }
-
 }

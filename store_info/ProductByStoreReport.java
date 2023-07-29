@@ -1,5 +1,6 @@
 package store_info;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 
@@ -38,7 +39,18 @@ public class ProductByStoreReport implements Report {
      * 
      */
     private void collectProductsSentToStore() {
-        // TODO implement here
+        List<Transaction> transactions = stockManager.getTransactions();
+        for (Transaction transaction : transactions) {
+            if (transaction instanceof OutgoingTransaction) {
+                Map<Product, Integer> productList = transaction.getProductList();
+                for (Map.Entry<Product, Integer> entry : productList.entrySet()) {
+                    Product product = entry.getKey();
+                    int numberOfItems = entry.getValue();
+                    if (transaction.getStoreID() == store.getID()) {
+                        product.addToQuantitySentToStore(numberOfItems);
+                    }
+                }
+            }
+        }
     }
-
 }

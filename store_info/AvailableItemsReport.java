@@ -16,17 +16,24 @@ public class AvailableItemsReport implements Report {
     }
 
     /**
-     * 
+     Generate and print the report of all available items in the inventory. 
+     //
      */
-    public void printReport() {
-        // TODO implement here
-    }
+    @Override
+   public void printReport() {
+       System.out.println("Available Items Report:");
+       List<Product> products = stockManager.getProducts();
+       for (Product product : products) {
+           int numberOfItems = product.getNumberOfItems();
+           System.out.println(product.getName() + " (ID: " + product.getID() + ") - Quantity: " + numberOfItems);
+       }
+   }
 
     /**
      * 
      */
     private void collectAvailableItems() {
-        // TODO implement here
+        // We already collect available items during the report generation,
     }
 
 }
