@@ -6,10 +6,13 @@ import java.util.*;
  */
 public class AvailableItemsReport implements Report {
 
+    private StockManager stockManager;
+
     /**
-     * Default constructor
+     * Constructor to initialize the AvailableItemsReport with the StockManager.
      */
-    public AvailableItemsReport() {
+    public AvailableItemsReport(StockManager stockManager) {
+        this.stockManager = stockManager;
     }
 
     /**

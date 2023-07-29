@@ -16,7 +16,7 @@ public class TransactionsManager {
      * Default constructor to initialize the TransactionsManager.
      */
     public TransactionsManager() {
-        //Initialize the list 
+        //Initialize the list of transactions
         transactions = new ArrayList<>();
     }
 
@@ -30,6 +30,10 @@ public class TransactionsManager {
         //you need to update the stock accordingly
         transactions.add(transaction);
         transaction.updateProductStock();
+    }
+
+    public List<Transaction> getTransactions(){
+        return transactions;
     }
 
     /**

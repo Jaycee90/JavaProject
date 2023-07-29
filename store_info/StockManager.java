@@ -1,19 +1,13 @@
 package store_info;
-import java.util.*; 
+//import java.util.*; 
+import java.util.ArrayList;
+import java.util.List;
 
 /**This class represents a Stock Manager that 
  * allows adding new products to the inventory 
  * and managing store information.
  */
 public class StockManager {
-
-    /**
-     * Default constructor that initializer
-     * StockManager
-     */
-    public StockManager() {
-    }
-
     /**
      * A list of Product objects that stores the 
      * inventory of products.
@@ -27,11 +21,19 @@ public class StockManager {
     private List<Store> stores;
 
     /**
+     * Default constructor that initializer
+     * StockManager
+     */
+    public StockManager() {
+        products = new ArrayList<>();
+        stores = new ArrayList<>();
+    }
+
+    /**
      * This method adds a new product to the inventory.
      * @param product The Product object to be added.
      */
     public void addProduct(Product product) {
-        // TODO implement here
         products.add(product);
     }
 
@@ -40,6 +42,14 @@ public class StockManager {
      */
     public void addStore(Store store) {
         stores.add(store);
+    }
+
+    /*
+     * Get the list of products.
+     * @return the list of products.
+     */
+    public List<Product> getProducts(){
+        return products;
     }
 
 }

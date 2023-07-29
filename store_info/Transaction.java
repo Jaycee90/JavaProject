@@ -1,24 +1,19 @@
 package store_info;
-import java.util.*;
+//import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /*This class represents a transaction in the inventory management system.
  * A transaction can be either an incoming or outgoing movement of products.
  * 
  */
 public abstract class Transaction {
-
-    /**
-     * Default constructor to initialize a new transaction.
-     */
-    public Transaction() {
-        productList = new HashMap<>();
-    }
-
-    /**
+      /**
      * Unique identifier for the transaction
      */
     private int ID;
-
+    
     /**
      * Date when the transaction occurred.
      */
@@ -28,6 +23,15 @@ public abstract class Transaction {
      * transaction and their corresponding quantity. 
      */
     private Map<Product, Integer> productList;
+
+    /**
+     * Default constructor to initialize a new transaction.
+     */
+    public Transaction(int ID, Date date) {
+        this.ID = ID;
+        this.date = date;
+        productList = new HashMap<Product, Integer>();
+    }
 
     // Abstract method to be overridden in the subclasses
     public abstract void updateProductStock();
@@ -39,12 +43,20 @@ public abstract class Transaction {
      * involved in the transaction. 
      */
     public void addProduct(Product product, int numberOfItems) {
-        // TODO implement here
+        productList.put(product, numberOfItems);
     }
 
     //Getter for productList with package-private access
     Map<Product, Integer> getProductList(){
         return productList;
+    }
+
+    public int getID(){
+        return ID;
+    }
+
+    public Date getDate(){
+        return date;
     }
 
 }
