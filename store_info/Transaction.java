@@ -14,6 +14,7 @@ public abstract class Transaction {
      * Unique identifier for the transaction
      */
     private int ID;
+    private int storeID;
     
     /**
      * Date when the transaction occurred.
@@ -63,6 +64,12 @@ public abstract class Transaction {
      */
     public Date getDate(){
         return date;
+    }
+
+    public int getStoreID() {
+        // Implement the logic to get the store ID associated with this transaction.
+        // For now, I will assume there is a field called storeID in the Transaction class.
+        return storeID;
     }
 
     /**

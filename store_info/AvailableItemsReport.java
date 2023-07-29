@@ -29,11 +29,4 @@ public class AvailableItemsReport implements Report {
        }
    }
 
-    /**
-     * 
-     */
-    private void collectAvailableItems() {
-        // We already collect available items during the report generation,
-    }
-
 }

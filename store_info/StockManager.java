@@ -21,6 +21,8 @@ public class StockManager {
      */
     private List<Store> stores;
 
+    private List<Transaction> transactions;
+
     /**
      * Default constructor that initializes the StockManager.
      */
@@ -59,5 +61,9 @@ public class StockManager {
      */
     public List<Store> getStores(){
         return stores;
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
     }
 }

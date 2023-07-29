@@ -9,6 +9,7 @@ public class Product {
     private int ID;
     private String name;
     private int numberOfItems;
+    private int quantitySentToStore;
 
     /**
      * Default constructor
@@ -48,5 +49,11 @@ public class Product {
         //stock manager to retrieve this information
         // just return 0 for now.
         return 0;
+    }
+
+    public void addToQuantitySentToStore(int quantity) {
+        // Implement the logic to add the given quantity to the quantitySentToStore field.
+        // For now, I will assume there is a field called quantitySentToStore in the Product class.
+        quantitySentToStore += quantity;
     }
 }

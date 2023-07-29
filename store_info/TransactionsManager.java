@@ -24,6 +24,10 @@ public class TransactionsManager {
             e.printStackTrace();
         }
     }
+    
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
 
     // Method to print all transactions
     public void printTransactions() {
