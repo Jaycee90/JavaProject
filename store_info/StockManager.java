@@ -2,7 +2,9 @@ package store_info;
 //import java.util.*; 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 /**
  * This class represents a Stock Manager that 
  * allows adding new products to the inventory 
@@ -20,6 +22,8 @@ public class StockManager {
      * 
      */
     private List<Store> stores;
+    private int lastProductID;
+    private int lastStoreID;
 
     private List<Transaction> transactions;
 
@@ -27,8 +31,10 @@ public class StockManager {
      * Default constructor that initializes the StockManager.
      */
     public StockManager() {
-        products = new ArrayList<>();
-        stores = new ArrayList<>();
+        products = new ArrayList<Product>();
+        stores = new ArrayList<Store>();
+        lastProductID = 0;
+        lastStoreID = 0;
     }
 
     /**
@@ -61,6 +67,16 @@ public class StockManager {
      */
     public List<Store> getStores(){
         return stores;
+    }
+
+    public int getNextProductID() {
+        lastProductID++;
+        return lastProductID;
+    }
+
+    public int getNextStoreID() {
+        lastStoreID++;
+        return lastStoreID;
     }
 
     public List<Transaction> getTransactions() {
