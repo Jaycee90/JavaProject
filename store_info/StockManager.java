@@ -1,10 +1,8 @@
 package store_info;
-//import java.util.*; 
+ 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
 /**
  * This class represents a Stock Manager that 
  * allows adding new products to the inventory 

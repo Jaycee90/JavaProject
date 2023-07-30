@@ -1,5 +1,5 @@
 package store_info;
-import java.util.*;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +20,10 @@ public abstract class Transaction {
      * Date when the transaction occurred.
      */
     private Date date;
+    /*
+     * transactionType represent the type of transaction
+     */
+    private String transactionType;
 
     /**A map that holds the products involved in the 
      * transaction and their corresponding quantity. 
@@ -29,9 +33,10 @@ public abstract class Transaction {
     /**
      * Default constructor to initialize a new transaction.
      */
-    public Transaction(int ID, Date date) {
+    public Transaction(int ID, Date date, String transactionType) {
         this.ID = ID;
         this.date = date;
+        this.transactionType = transactionType;
         productList = new HashMap<Product, Integer>();
     }
 
@@ -64,6 +69,14 @@ public abstract class Transaction {
      */
     public Date getDate(){
         return date;
+    }
+    
+    /**
+     * Getter for the transaction type
+     * @return the type of the transaction.
+     */
+     public String getTransactionType() {
+        return transactionType;
     }
 
     public int getStoreID() {
