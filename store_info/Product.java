@@ -9,7 +9,9 @@ public class Product {
     private int ID;
     private String name;
     private int numberOfItems;
-    private int quantitySentToStore;
+    //private int quantitySentToStore;
+    //to keep track of the quantity of the product sent to each store.
+    private Map<Integer, Integer> quantitySentToStores;
 
     /**
      * Default constructor
@@ -21,6 +23,7 @@ public class Product {
     public Product(int ID, String name){
         this.ID = ID;
         this.name = name;
+        this.quantitySentToStores = new HashMap<Integer, Integer>();
     }
 
     /**
@@ -47,13 +50,11 @@ public class Product {
         // Implement the logic to get the quantity of this product sent
         // to the store with the given storeID, I will access the 
         //stock manager to retrieve this information
-        // just return 0 for now.
-        return 0;
+        return quantitySentToStores.getOrDefault(storeID, 0);
     }
 
-    public void addToQuantitySentToStore(int quantity) {
-        // Implement the logic to add the given quantity to the quantitySentToStore field.
-        // For now, I will assume there is a field called quantitySentToStore in the Product class.
-        quantitySentToStore += quantity;
+    public void addToQuantitySentToStore(int storeID, int quantity) {
+        int currentQuantity = quantitySentToStores.getOrDefault(storeID, 0);
+        quantitySentToStores.put(storeID, currentQuantity + quantity);
     }
 }

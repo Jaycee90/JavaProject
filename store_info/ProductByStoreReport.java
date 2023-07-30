@@ -1,6 +1,5 @@
 package store_info;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 
@@ -31,25 +30,6 @@ public class ProductByStoreReport implements Report {
             int quantitySentToStore = product.getQuantitySentToStore(store.getID());
             if (quantitySentToStore > 0){
                 System.out.println(product.getName() + " (ID: " + product.getID() + ") - Quantity:" + quantitySentToStore);
-            }
-        }
-    }
-
-    /**
-     * 
-     */
-    private void collectProductsSentToStore() {
-        List<Transaction> transactions = stockManager.getTransactions();
-        for (Transaction transaction : transactions) {
-            if (transaction instanceof OutgoingTransaction) {
-                Map<Product, Integer> productList = transaction.getProductList();
-                for (Map.Entry<Product, Integer> entry : productList.entrySet()) {
-                    Product product = entry.getKey();
-                    int numberOfItems = entry.getValue();
-                    if (transaction.getStoreID() == store.getID()) {
-                        product.addToQuantitySentToStore(numberOfItems);
-                    }
-                }
             }
         }
     }
