@@ -2,6 +2,8 @@
 package store_info;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -20,6 +22,7 @@ public class Main {
         // Generating reports and save to .txt files
         Report availableItemsReport = new AvailableItemsReport(stockManager);
         Report allItemsEnteredReport = new AllItemsEnteredReport(transactionsManager);
+        
 
         Scanner scanner = new Scanner(System.in);
 
@@ -78,6 +81,8 @@ public class Main {
                     } else {
                         IncomingTransaction incomingTransaction = new IncomingTransaction(transactionsManager.getNextTransactionID(), new Date());
                         incomingTransaction.addProduct(selectedProduct, quantity);
+                        //update the quantity in the warehouse(storeID = 0)
+                        selectedProduct.addToQuantitySentToStore(0, quantity);
                         transactionsManager.addTransaction(incomingTransaction);
                         System.out.println("Incoming transaction successfully added!");
                     }
@@ -110,19 +115,84 @@ public class Main {
                     if (selectedStore == null || selectedProduct == null) {
                         System.out.println("Invalid store ID or product ID. Transaction canceled.");
                     } else {
-                        OutgoingTransaction outgoingTransaction = new OutgoingTransaction(transactionsManager.getNextTransactionID(), new Date());
-                        outgoingTransaction.addProduct(selectedProduct, quantity);
-                        transactionsManager.addTransaction(outgoingTransaction);
-                        System.out.println("Outgoing transaction successfully added!");
+                        // Check if there are enough items in the warehouse
+                        int warehouseQuantity = selectedProduct.getQuantitySentToStore(0);
+                        if (warehouseQuantity < quantity){
+                            System.out.println("Not enough items in the warehouse. Transaction canceled.");
+                        }
+                        else{
+                            OutgoingTransaction outgoingTransaction = new OutgoingTransaction(transactionsManager.getNextTransactionID(), new Date());
+                            outgoingTransaction.addProduct(selectedProduct, quantity);
+
+                            // Deduct the quantity from the warehouse and add it to the store
+                            selectedProduct.addToQuantitySentToStore(0, -quantity);
+                            selectedProduct.addToQuantitySentToStore(selectedStore.getID(), quantity);
+                            
+                            transactionsManager.addTransaction(outgoingTransaction);
+                            System.out.println("Outgoing transaction successfully added!");
+                        }
                     }
                     break;
 
                 case "r":
-                    System.out.println("Generating reports...");
-                    // Generate reports
-                    reportsManager.generateReport(availableItemsReport);
-                    reportsManager.generateReport(allItemsEnteredReport);
-                    // You can add more reports here if needed: FIXME
+                    System.out.println("Generate Reports Submenu");
+                    System.out.println("Note:Available items report and Incoming items reports are saved to .txt files");
+                    System.out.println("You can see items sent to store and all transactions to console!");
+                    System.out.println("_______________________________________________________________________________\n");
+                    System.out.println("a: Available Items Report");
+                    System.out.println("v: Incoming Products Report");
+                    System.out.println("s: Items Sent to Stores Report");
+                    System.out.println("t: All Transactions Report");
+                    System.out.println("x: Return to Main Menu\n");
+
+                    System.out.print("Choose a report to generate: ");
+                    String reportOption = scanner.nextLine().toLowerCase();
+
+                    switch (reportOption) {
+                        case "a":
+                            reportsManager.generateAvailableItemsReport(stockManager);
+                            break;
+
+                        case "v":
+                            reportsManager.generateAllItemsEnteredReport(transactionsManager);
+                            break;
+
+                        case "s":
+                            reportsManager.generateItemsSentToStoresReport(stockManager);
+                            break;
+
+                        case "t":
+                            System.out.println("All Transactions Report:");
+                            List<Transaction> transactions = transactionsManager.getTransactions();
+                            for (Transaction transaction : transactions) {
+                                System.out.println("Transaction ID: " + transaction.getID());
+                                System.out.println("Date: " + transaction.getDate());
+                                System.out.println("Transaction Type: " + transaction.getTransactionType());
+
+                                Map<Product, Integer> productList = transaction.getProductList();
+                                for (Map.Entry<Product, Integer> entry : productList.entrySet()) {
+                                    Product myProd = entry.getKey();
+                                    int numberOfItems = entry.getValue();
+                                    System.out.println(myProd.getName() + " (ID: " + myProd.getID() + ") - Quantity: " + numberOfItems);
+                                }
+
+                            if (transaction instanceof OutgoingTransaction) {
+                                OutgoingTransaction outgoingTransaction = (OutgoingTransaction) transaction;
+                                System.out.println("Store ID: " + outgoingTransaction.getStoreID());
+                            }
+
+                            System.out.println("-----------------------------------");
+                            }
+                            //reportsManager.generateAllTransactionsReport(transactionsManager);
+                            break;
+
+                        case "x":
+                            System.out.println("Returning to the Main Menu...");
+                            break;
+
+                        default:
+                            System.out.println("Invalid input. Please try again.");
+                    }
                     break;
 
                 case "x":
