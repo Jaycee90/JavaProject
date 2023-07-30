@@ -27,32 +27,25 @@ public class AllItemsEnteredReport implements Report {
     @Override
     public void printReport() {
         List<Transaction> transactions = transactionsManager.getTransactions();
-        try (FileWriter fileWriter = new FileWriter("AllItemsEnteredReport.txt")) {
-            fileWriter.write("All Items Entered Report:\n");
+        try (FileWriter fileWriter = new FileWriter("IncomingTransactionsReport.txt")) {
+            fileWriter.write("Incoming Transactions Report:\n");
+            fileWriter.write("Transactions appear in the format: ID - Date\n");
             for (Transaction transaction : transactions){
                 if (transaction instanceof IncomingTransaction){
-                    fileWriter.write("Transasction ID: " + transaction.getID() + "\n");
-                    fileWriter.write("Date: " + transaction.getDate() + "\n");
+                    fileWriter.write(transaction.getID() + " - " + transaction.getDate()+ "\n");
                     fileWriter.write("Products:\n");
                     for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()){
                         Product product = entry.getKey();
                         int numberOfItems = entry.getValue();
-                        fileWriter.write(product.getName() + "(ID: " + product.getID() + ") -Quantity: " + numberOfItems + "\n");
+                        fileWriter.write(product.getName() + "( " + product.getID() + "): " + numberOfItems + "\n");
                     }
                     fileWriter.write("-----------------------------------\n");
                 }
             }
-            System.out.println("Report saved to AllItemsEnteredReport.txt");
+            System.out.println("Report saved to IncomingTransactionsReport.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * 
-     */
-    private void collectItemsEntered() {
-        // TODO implement here
     }
 
     public List<Transaction> getTransactions(){
