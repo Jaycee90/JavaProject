@@ -14,7 +14,7 @@ public class IncomingTransaction extends Transaction {
      * Default constructor to initialize an incoming transaction.
      */
     public IncomingTransaction(int ID, Date date) {
-        super(ID, date);
+        super(ID, date, "Incoming");
     }
 
     /**

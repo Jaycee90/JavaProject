@@ -11,12 +11,22 @@ import java.util.Map;
  * 
  */
 public class OutgoingTransaction extends Transaction {
+    private int storeID;
 
     /**
      * Default constructor to initialize outgoing transactions.
      */
     public OutgoingTransaction(int ID, Date date) {
-        super(ID, date);
+        super(ID, date, "Outgoing");
+        this.storeID = storeID;
+    }
+
+    /**
+     * Getter for store ID
+     * @return storeID the identification namber of store
+     */
+    public int getStoreID(){
+        return storeID;
     }
 
     /**
