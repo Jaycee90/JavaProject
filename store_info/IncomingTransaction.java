@@ -1,5 +1,6 @@
 package store_info;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * This class represents an incoming transaction in the inventory
@@ -30,5 +31,23 @@ public class IncomingTransaction extends Transaction {
             product.setNumberOfItems(product.getNumberOfItems() + numberOfItems);
         }
     }
+
+        // Write the incoming transaction details to the "AllIncomingItems.txt" file
+        @Override
+        public void writeToLogFile() {
+            StringBuilder transactionDetails = new StringBuilder();
+            transactionDetails.append("Incoming Transaction ID: ").append(getID()).append("\n");
+            transactionDetails.append("Date: ").append(getDate()).append("\n");
+            transactionDetails.append("Products: \n");
+            for (Map.Entry<Product, Integer> entry : getProductList().entrySet()) {
+                Product product = entry.getKey();
+                int numberOfItems = entry.getValue();
+                transactionDetails.append(product.getName()).append(" (ID: ").append(product.getID()).append(") - Quantity: ").append(numberOfItems).append("\n");
+            }
+            transactionDetails.append("-----------------------------------\n");
+    
+            TransactionsManager transactionsManager = new TransactionsManager();
+            transactionsManager.appendToFile("AllIncomingItems.txt", transactionDetails.toString());
+        }
 
 }
