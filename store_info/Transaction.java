@@ -77,4 +77,10 @@ public abstract class Transaction {
      * This method should be overridden in the subclasses (IncomingTransaction and OutgoingTransaction).
      */
     public abstract void updateProductStock();
+
+    /**
+     * Write the transaction details to the log file.
+     * This method should be overridden in the subclasses (IncomingTransaction and OutgoingTransaction).
+     */
+    public abstract void writeToLogFile();
 }
