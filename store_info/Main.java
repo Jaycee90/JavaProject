@@ -12,12 +12,12 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        // Initialize the inventory management system components
+        // Initialization of the inventory management system components
         StockManager stockManager = new StockManager();
         ReportsManager reportsManager = new ReportsManager();
         TransactionsManager transactionsManager = new TransactionsManager();
 
-        // Generate reports and save to .txt files
+        // Generating reports and save to .txt files
         Report availableItemsReport = new AvailableItemsReport(stockManager);
         Report allItemsEnteredReport = new AllItemsEnteredReport(transactionsManager);
 
@@ -25,18 +25,20 @@ public class Main {
 
         while (true) {
             System.out.println("Inventory Management System Menu");
+            System.out.println("________________________________\n");
             System.out.println("p: Add Product");
             System.out.println("s: Add Store");
             System.out.println("i: Perform Incoming Transaction");
             System.out.println("o: Perform Outgoing Transaction");
             System.out.println("r: Generate Reports");
-            System.out.println("x: Exit Program");
+            System.out.println("x: Exit Program\n");
 
             System.out.print("Input an action: ");
             String input = scanner.nextLine();
 
             switch (input.toLowerCase()) {
                 case "p":
+                    //Add product input
                     System.out.print("Enter product name: ");
                     String productName = scanner.nextLine();
                     System.out.print("Enter product amount: ");
@@ -47,6 +49,7 @@ public class Main {
                     break;
 
                 case "s":
+                    //Add store input
                     System.out.print("Enter store name: ");
                     String storeName = scanner.nextLine();
                     System.out.print("Enter store address: ");
@@ -71,7 +74,7 @@ public class Main {
                     // Get the selected product and create an incoming transaction
                     Product selectedProduct = stockManager.getProductByID(productID);
                     if (selectedProduct == null) {
-                        System.out.println("Invalid product ID. Transaction canceled.");
+                        System.out.println("Invalid product ID, Transaction canceled.");
                     } else {
                         IncomingTransaction incomingTransaction = new IncomingTransaction(transactionsManager.getNextTransactionID(), new Date());
                         incomingTransaction.addProduct(selectedProduct, quantity);
@@ -119,7 +122,7 @@ public class Main {
                     // Generate reports
                     reportsManager.generateReport(availableItemsReport);
                     reportsManager.generateReport(allItemsEnteredReport);
-                    // You can add more reports here if needed
+                    // You can add more reports here if needed: FIXME
                     break;
 
                 case "x":
