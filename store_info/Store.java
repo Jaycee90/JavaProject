@@ -1,5 +1,5 @@
 package store_info;
-import java.util.*;
+
 
 /**
  * This class represents a store in the inventory management system.

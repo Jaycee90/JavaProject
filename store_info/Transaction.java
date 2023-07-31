@@ -80,20 +80,20 @@ public abstract class Transaction {
     }
 
     public int getStoreID() {
-        // Implement the logic to get the store ID associated with this transaction.
-        // For now, I will assume there is a field called storeID in the Transaction class.
         return storeID;
     }
 
     /**
      * Update the product stock.
-     * This method should be overridden in the subclasses (IncomingTransaction and OutgoingTransaction).
+     * This method should be overridden in the subclasses 
+     * (IncomingTransaction and OutgoingTransaction).
      */
     public abstract void updateProductStock();
 
     /**
      * Write the transaction details to the log file.
-     * This method should be overridden in the subclasses (IncomingTransaction and OutgoingTransaction).
+     * This method should be overridden in the subclasses 
+     * (IncomingTransaction and OutgoingTransaction).
      */
     public abstract void writeToLogFile();
 }

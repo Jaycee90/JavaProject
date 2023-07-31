@@ -1,10 +1,7 @@
 package store_info;
 
-//import java.util.*;
 import java.util.List;
 import java.util.Map;
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * 
@@ -26,28 +23,23 @@ public class AllItemsEnteredReport implements Report {
      */
     @Override
     public void printReport() {
+        System.out.println("All Items Entered Report:");
         List<Transaction> transactions = transactionsManager.getTransactions();
-        try (FileWriter fileWriter = new FileWriter("IncomingTransactionsReport.txt")) {
-            fileWriter.write("Incoming Transactions Report:\n");
-            fileWriter.write("Transactions appear in the format: ID - Date\n");
-            for (Transaction transaction : transactions){
-                if (transaction instanceof IncomingTransaction){
-                    fileWriter.write(transaction.getID() + " - " + transaction.getDate()+ "\n");
-                    fileWriter.write("Products:\n");
-                    for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()){
-                        Product product = entry.getKey();
-                        int numberOfItems = entry.getValue();
-                        fileWriter.write(product.getName() + "( " + product.getID() + "): " + numberOfItems + "\n");
-                    }
-                    fileWriter.write("-----------------------------------\n");
+        for (Transaction transaction : transactions) {
+            if (transaction instanceof IncomingTransaction) {
+                System.out.println("Transaction ID: " + transaction.getID());
+                System.out.println("Date: " + transaction.getDate());
+                System.out.println("Products: ");
+                for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()) {
+                    Product product = entry.getKey();
+                    int numberOfItems = entry.getValue();
+                    System.out.println(product.getName() + " (ID: " + product.getID() + ") - Quantity: " + numberOfItems);
                 }
+                System.out.println("-----------------------------------");
             }
-            System.out.println("Report saved to IncomingTransactionsReport.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
-
+    
     public List<Transaction> getTransactions(){
         return transactionsManager.getTransactions();
     }

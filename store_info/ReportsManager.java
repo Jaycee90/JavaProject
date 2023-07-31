@@ -1,4 +1,5 @@
 package store_info;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -61,13 +62,15 @@ public class ReportsManager {
         report.append("Items Sent to Stores Report:\n");
         for (Store store : stores) {
             boolean anyItemSent = false;
-            report.append("Store: ").append(store.getName()).append(" (ID: ").append(store.getID()).append(")\n");
+            report.append("Store: ").append(store.getName()).append(" (ID: ").
+                   append(store.getID()).append(")\n");
             List<Product> products = stockManager.getProducts();
             for (Product product : products) {
                 int quantitySentToStore = product.getQuantitySentToStore(store.getID());
                 if (quantitySentToStore > 0) {
                     anyItemSent = true;
-                    report.append(product.getName()).append(" (ID: ").append(product.getID()).append(") - Quantity: ").append(quantitySentToStore).append("\n");
+                    report.append(product.getName()).append(" (ID: ").append(product.getID()).
+                           append(") - Quantity: ").append(quantitySentToStore).append("\n");
                 }
             }
             if (anyItemSent) {
@@ -81,19 +84,24 @@ public class ReportsManager {
         saveReportToFile("ItemsSentToStoresReport.txt", report.toString());
     }
 
-
-    public void generateAllTransactionsReport(TransactionsManager transactionsManager) {
+public void generateAllTransactionsReport(TransactionsManager transactionsManager) {
     List<Transaction> transactions = transactionsManager.getTransactions();
     StringBuilder report = new StringBuilder();
     report.append("All Transactions Report:\n");
     for (Transaction transaction : transactions) {
         report.append("Transaction ID: ").append(transaction.getID()).append("\n");
         report.append("Date: ").append(transaction.getDate()).append("\n");
+        report.append("Transaction Type: ").append(transaction.getTransactionType()).append("\n");
         report.append("Products: \n");
         for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()) {
             Product product = entry.getKey();
             int numberOfItems = entry.getValue();
-            report.append(product.getName()).append("(ID: ").append(product.getID()).append(") - Quantity: ").append(numberOfItems).append("\n");
+            report.append(product.getName()).append(" (ID: ").append(product.getID()).
+                   append(") - Quantity: ").append(numberOfItems).append("\n");
+        }
+        if (transaction instanceof OutgoingTransaction) {
+            OutgoingTransaction outgoingTransaction = (OutgoingTransaction) transaction;
+            report.append("Store ID: ").append(outgoingTransaction.getStoreID()).append("\n");
         }
         report.append("-----------------------------------\n");
     }

@@ -1,7 +1,7 @@
 package store_info;
+
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +48,8 @@ public class TransactionsManager {
             for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()) {
                 Product product = entry.getKey();
                 int numberOfItems = entry.getValue();
-                System.out.println(product.getName() + "(ID: " + product.getID() + ") - Quantity: " + numberOfItems);
+                System.out.println(product.getName() + "(ID: " + product.getID() + 
+                                    ") - Quantity: " + numberOfItems);
             }
             System.out.println("-----------------------------------");
         }
@@ -65,7 +66,8 @@ public class TransactionsManager {
                 for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()) {
                     Product product = entry.getKey();
                     int numberOfItems = entry.getValue();
-                    fileWriter.write(product.getName() + "(ID: " + product.getID() + ") - Quantity: " + numberOfItems + "\n");
+                    fileWriter.write(product.getName() + "(ID: " + product.getID() + 
+                                       ") - Quantity: " + numberOfItems + "\n");
                 }
                 fileWriter.write("-----------------------------------\n");
             }

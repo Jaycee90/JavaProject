@@ -16,7 +16,7 @@ public class OutgoingTransaction extends Transaction {
     /**
      * Default constructor to initialize outgoing transactions.
      */
-    public OutgoingTransaction(int ID, Date date) {
+    public OutgoingTransaction(int ID, Date date, int storeID) {
         super(ID, date, "Outgoing");
         this.storeID = storeID;
     }
@@ -56,7 +56,8 @@ public class OutgoingTransaction extends Transaction {
             for (Map.Entry<Product, Integer> entry : getProductList().entrySet()) {
                 Product product = entry.getKey();
                 int numberOfItems = entry.getValue();
-                transactionDetails.append(product.getName()).append(" (ID: ").append(product.getID()).append(") - Quantity: ").append(numberOfItems).append("\n");
+                transactionDetails.append(product.getName()).append(" (ID: ").append(product.getID()).
+                                    append(") - Quantity: ").append(numberOfItems).append("\n");
             }
             transactionDetails.append("-----------------------------------\n");
     

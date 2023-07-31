@@ -1,5 +1,4 @@
 package store_info;
-import java.util.*;
 
 /**
  * The Report interface represents a contract for generating store reports.
@@ -10,8 +9,7 @@ import java.util.*;
 public interface Report {
     /*
      * Generates the specific report based on store data. 
-     * The implementing class should define the report generation 
-     * logic here. The specific details and format of the report 
+     * The specific details and format of the report 
      * should be described in the implementation.
      */
     void printReport();

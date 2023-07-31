@@ -19,11 +19,6 @@ public class Main {
         ReportsManager reportsManager = new ReportsManager();
         TransactionsManager transactionsManager = new TransactionsManager();
 
-        // Generating reports and save to .txt files
-        Report availableItemsReport = new AvailableItemsReport(stockManager);
-        Report allItemsEnteredReport = new AllItemsEnteredReport(transactionsManager);
-        
-
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -79,7 +74,8 @@ public class Main {
                     if (selectedProduct == null) {
                         System.out.println("Invalid product ID, Transaction canceled.");
                     } else {
-                        IncomingTransaction incomingTransaction = new IncomingTransaction(transactionsManager.getNextTransactionID(), new Date());
+                        IncomingTransaction incomingTransaction = new IncomingTransaction(transactionsManager.
+                                                                  getNextTransactionID(), new Date());
                         incomingTransaction.addProduct(selectedProduct, quantity);
                         //update the quantity in the warehouse(storeID = 0)
                         selectedProduct.addToQuantitySentToStore(0, quantity);
@@ -116,12 +112,13 @@ public class Main {
                         System.out.println("Invalid store ID or product ID. Transaction canceled.");
                     } else {
                         // Check if there are enough items in the warehouse
-                        int warehouseQuantity = selectedProduct.getQuantitySentToStore(0);
+                        int warehouseQuantity = selectedProduct.getNumberOfItems();
                         if (warehouseQuantity < quantity){
                             System.out.println("Not enough items in the warehouse. Transaction canceled.");
                         }
                         else{
-                            OutgoingTransaction outgoingTransaction = new OutgoingTransaction(transactionsManager.getNextTransactionID(), new Date());
+                            OutgoingTransaction outgoingTransaction = new OutgoingTransaction
+                            (transactionsManager.getNextTransactionID(), new Date(), storeID);
                             outgoingTransaction.addProduct(selectedProduct, quantity);
 
                             // Deduct the quantity from the warehouse and add it to the store
@@ -136,9 +133,8 @@ public class Main {
 
                 case "r":
                     System.out.println("Generate Reports Submenu");
-                    System.out.println("Note:Available items report and Incoming items reports are saved to .txt files");
-                    System.out.println("You can see items sent to store and all transactions to console!");
-                    System.out.println("_______________________________________________________________________________\n");
+                    System.out.println("Note:Reports are also saved to .txt files");
+                    System.out.println("__________________________________________\n");
                     System.out.println("a: Available Items Report");
                     System.out.println("v: Incoming Products Report");
                     System.out.println("s: Items Sent to Stores Report");
@@ -173,7 +169,8 @@ public class Main {
                                 for (Map.Entry<Product, Integer> entry : productList.entrySet()) {
                                     Product myProd = entry.getKey();
                                     int numberOfItems = entry.getValue();
-                                    System.out.println(myProd.getName() + " (ID: " + myProd.getID() + ") - Quantity: " + numberOfItems);
+                                    System.out.println(myProd.getName() + " (ID: " + myProd.getID() + 
+                                                                     ") - Quantity: " + numberOfItems);
                                 }
 
                             if (transaction instanceof OutgoingTransaction) {
@@ -183,7 +180,7 @@ public class Main {
 
                             System.out.println("-----------------------------------");
                             }
-                            //reportsManager.generateAllTransactionsReport(transactionsManager);
+                            reportsManager.generateAllTransactionsReport(transactionsManager);
                             break;
 
                         case "x":
