@@ -56,6 +56,11 @@ public class ReportsManager {
         generateReport(productByStoreReport);
     }
 
+    /*
+     * Generates a report of products sent to each store in the inventory.
+     * @param stockManager The StockManager object used to retrieve 
+     * product and store information.
+     */
     public void generateItemsSentToStoresReport(StockManager stockManager) {
         List<Store> stores = stockManager.getStores();
         StringBuilder report = new StringBuilder();
@@ -84,6 +89,11 @@ public class ReportsManager {
         saveReportToFile("ItemsSentToStoresReport.txt", report.toString());
     }
 
+/**
+ * Generates a report of all transactions recorded in the inventory management system.
+ * @param transactionsManager The TransactionsManager object used 
+ * to retrieve transaction information.
+ */
 public void generateAllTransactionsReport(TransactionsManager transactionsManager) {
     List<Transaction> transactions = transactionsManager.getTransactions();
     StringBuilder report = new StringBuilder();
@@ -109,6 +119,12 @@ public void generateAllTransactionsReport(TransactionsManager transactionsManage
     saveReportToFile("AllTransactionsReport.txt", report.toString());
 }
 
+/**
+ * Utility method to save a report to a file.
+ *
+ * @param fileName The name of the file to save the report.
+ * @param report   The content of the report to be saved.
+ */
 private void saveReportToFile(String fileName, String report) {
     try (FileWriter fileWriter = new FileWriter(fileName)) {
         fileWriter.write(report);

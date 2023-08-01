@@ -13,6 +13,8 @@ public class IncomingTransaction extends Transaction {
 
     /**
      * Default constructor to initialize an incoming transaction.
+     * @param ID   The unique identifier for the incoming transaction.
+     * @param date The date of the incoming transaction.
      */
     public IncomingTransaction(int ID, Date date) {
         super(ID, date, "Incoming");
@@ -33,7 +35,11 @@ public class IncomingTransaction extends Transaction {
         }
     }
 
-        // Write the incoming transaction details to the "AllIncomingItems.txt" file
+        /*
+         * Write the incoming transaction details to the "AllIncomingItems.txt" file.
+         * This method appends the incoming transaction information, including the
+         * transaction ID, date, and the products received, to the specified file.
+         */
         @Override
         public void writeToLogFile() {
             StringBuilder transactionDetails = new StringBuilder();

@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
+ *  A report class that prints the report of 
+ * all items entered in the inventory.
  */
 public class AllItemsEnteredReport implements Report {
 
@@ -12,7 +13,7 @@ public class AllItemsEnteredReport implements Report {
 
     /**
      * Constructor to initialize the AllItemsEnteredReport with the TransactionsManager.
-     *
+     * @param transactionsManager The TransactionsManager used for generating the report.
      */
     public AllItemsEnteredReport(TransactionsManager transactionsManager) {
         this.transactionsManager = transactionsManager;
@@ -40,6 +41,10 @@ public class AllItemsEnteredReport implements Report {
         }
     }
     
+     /**
+     * Get a list of all transactions associated with this report.
+     * @return A list of Transaction objects.
+     */
     public List<Transaction> getTransactions(){
         return transactionsManager.getTransactions();
     }

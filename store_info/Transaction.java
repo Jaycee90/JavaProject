@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This class represents a transaction in the inventory management system.
+ * The Transaction class represents a transaction in the inventory management system.
  * A transaction can be either an incoming or outgoing movement of products.
  * 
  */
@@ -14,6 +14,10 @@ public abstract class Transaction {
      * Unique identifier for the transaction
      */
     private int ID;
+
+    /*
+     * Unique identifier of the store involved in the transaction.
+     */
     private int storeID;
     
     /**
@@ -21,7 +25,7 @@ public abstract class Transaction {
      */
     private Date date;
     /*
-     * transactionType represent the type of transaction
+     * The type of transaction (Incoming or Outgoing).
      */
     private String transactionType;
 
@@ -32,6 +36,9 @@ public abstract class Transaction {
 
     /**
      * Default constructor to initialize a new transaction.
+     * @param ID The unique identifier for the transaction.
+     * @param date The date when the transaction occurred.
+     * @param transactionType The type of transaction (Incoming or Outgoing).
      */
     public Transaction(int ID, Date date, String transactionType) {
         this.ID = ID;
@@ -50,7 +57,13 @@ public abstract class Transaction {
         productList.put(product, numberOfItems);
     }
 
-    // Getter for productList with package-private access
+     /**
+     * Getter for the product list involved in the transaction.
+     * This method has package-private access, meaning it can be accessed
+     * by other classes within the same package but not from outside the package.
+     * @return The map containing the products and their corresponding 
+     * quantities in the transaction.
+     */
     Map<Product, Integer> getProductList(){
         return productList;
     }
@@ -71,14 +84,18 @@ public abstract class Transaction {
         return date;
     }
     
-    /**
-     * Getter for the transaction type
-     * @return the type of the transaction.
+     /**
+     * Get the type of the transaction (Incoming or Outgoing).
+     * @return The type of the transaction.
      */
      public String getTransactionType() {
         return transactionType;
     }
 
+    /**
+     * Get the unique identifier of the store involved in the transaction.
+     * @return The unique identifier of the store.
+     */
     public int getStoreID() {
         return storeID;
     }

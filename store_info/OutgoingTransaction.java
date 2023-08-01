@@ -4,17 +4,19 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- *  This class represents an outgoing transaction in the inventory
+ * This class represents an outgoing transaction in the inventory
  * management system.An outgoing transaction is used when deducting/
  * removing an items from the inventory.It extends the base 
  * Transaction class, inheriting its attributes and methods.
- * 
  */
 public class OutgoingTransaction extends Transaction {
     private int storeID;
 
     /**
      * Default constructor to initialize outgoing transactions.
+     * @param ID      The unique identifier for the outgoing transaction.
+     * @param date    The date of the outgoing transaction.
+     * @param storeID The identification number of the store where the items are sent.
      */
     public OutgoingTransaction(int ID, Date date, int storeID) {
         super(ID, date, "Outgoing");
@@ -23,7 +25,7 @@ public class OutgoingTransaction extends Transaction {
 
     /**
      * Getter for store ID
-     * @return storeID the identification namber of store
+     * @return the identification number of store where the items are sent
      */
     public int getStoreID(){
         return storeID;
@@ -46,7 +48,11 @@ public class OutgoingTransaction extends Transaction {
         }
     }
 
-        // Write the outgoing transaction details to the "AllOutgoingItems.txt" file
+    /**
+     * Write the outgoing transaction details to the "AllOutgoingItems.txt" file.
+     * This method appends the outgoing transaction information, including the
+     * transaction ID, date, and the products removed, to the specified file.
+     */
         @Override
         public void writeToLogFile() {
             StringBuilder transactionDetails = new StringBuilder();

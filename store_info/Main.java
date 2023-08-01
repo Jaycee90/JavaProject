@@ -12,6 +12,15 @@ import java.util.Scanner;
  * managers responsible for managing different aspects of the store.
  */
 public class Main {
+    /**
+     * The main method serves as the entry point of the inventory management system.
+     * It initializes the components of the system, such as StockManager, ReportsManager,
+     * and TransactionsManager. Then, it presents a menu to the user for performing various actions,
+     * such as adding products, adding stores, performing incoming and outgoing transactions,
+     * generating reports, and exiting the program.
+     *
+     * @param args Command-line arguments (not used in this application).
+     */
 
     public static void main(String[] args) {
         // Initialization of the inventory management system components
