@@ -40,4 +40,24 @@ public class ProductByStoreReport implements Report {
             }
         }
     }
+
+     /**
+     * Save the report of products sent to the specified store to a txt file.
+     * This report lists the products and their quantities sent to the specified store.
+     */
+    @Override
+    public String reportMe() {
+        StringBuilder report = new StringBuilder();
+        report.append("Products sent to store: ").append(store.getName()).append(" (ID: ").
+               append(store.getID()).append(")\n");
+        List<Product> products = stockManager.getProducts();
+        for (Product product : products) {
+            int quantitySentToStore = product.getQuantitySentToStore(store.getID());
+            if (quantitySentToStore > 0) {
+                report.append(product.getName()).append(" (ID: ").append(product.getID())
+                      .append(") - Quantity: ").append(quantitySentToStore).append("\n");
+            }
+        }
+        return report.toString();
+    }
 }

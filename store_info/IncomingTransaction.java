@@ -49,7 +49,8 @@ public class IncomingTransaction extends Transaction {
             for (Map.Entry<Product, Integer> entry : getProductList().entrySet()) {
                 Product product = entry.getKey();
                 int numberOfItems = entry.getValue();
-                transactionDetails.append(product.getName()).append(" (ID: ").append(product.getID()).append(") - Quantity: ").append(numberOfItems).append("\n");
+                transactionDetails.append(product.getName()).append(" (ID: ").append(product.getID()).
+                                   append(") - Quantity: ").append(numberOfItems).append("\n");
             }
             transactionDetails.append("-----------------------------------\n");
     

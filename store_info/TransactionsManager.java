@@ -66,7 +66,6 @@ public class TransactionsManager {
         return nextTransactionID++;
     }
 
-    
     /**
      * Prints all transactions and their details to the console.
      */

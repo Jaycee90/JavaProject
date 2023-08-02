@@ -35,7 +35,9 @@ public class ReportsManager {
     public void generateAllItemsEnteredReport(TransactionsManager transactionsManager) {
         Report allItemsEnteredReport = new AllItemsEnteredReport(transactionsManager);
         generateReport(allItemsEnteredReport);
+        saveReportToFile("AllItemsEnteredReport.txt", allItemsEnteredReport.reportMe());
     }
+
 
     /**
      * Generate a report of available items in the inventory.
@@ -44,16 +46,8 @@ public class ReportsManager {
     public void generateAvailableItemsReport(StockManager stockManager) {
         Report availableItemsReport = new AvailableItemsReport(stockManager);
         generateReport(availableItemsReport);
-    }
-
-    /**
-     * Generate a report of products sent to a specific store.
-     * @param stockManager The StockManager object to retrieve the products.
-     * @param store The Store object representing the store.
-     */
-    public void generateProductByStoreReport(StockManager stockManager, Store store) {
-        Report productByStoreReport = new ProductByStoreReport(stockManager, store);
-        generateReport(productByStoreReport);
+        saveReportToFile("AvailableItemsReport.txt", availableItemsReport.reportMe());
+        
     }
 
     /*
@@ -64,18 +58,19 @@ public class ReportsManager {
     public void generateItemsSentToStoresReport(StockManager stockManager) {
         List<Store> stores = stockManager.getStores();
         StringBuilder report = new StringBuilder();
-        report.append("Items Sent to Stores Report:\n");
+        report.append("Items Sent to Stores Report:\n").
+        append("Products appear in the format: name(id): amount\n\n");
         for (Store store : stores) {
             boolean anyItemSent = false;
-            report.append("Store: ").append(store.getName()).append(" (ID: ").
-                   append(store.getID()).append(")\n");
+            report.append("Store: ").append(store.getName()).append("(").
+                   append(store.getID()).append(") ").append(store.getAddress()).append("\n");
             List<Product> products = stockManager.getProducts();
             for (Product product : products) {
                 int quantitySentToStore = product.getQuantitySentToStore(store.getID());
                 if (quantitySentToStore > 0) {
                     anyItemSent = true;
-                    report.append(product.getName()).append(" (ID: ").append(product.getID()).
-                           append(") - Quantity: ").append(quantitySentToStore).append("\n");
+                    report.append(product.getName()).append(" (").append(product.getID()).
+                           append("): ").append(quantitySentToStore).append("\n");
                 }
             }
             if (anyItemSent) {
@@ -86,50 +81,60 @@ public class ReportsManager {
             }
         }
         System.out.println(report.toString());
+        System.out.println("Items sent to stores report saved to 'ItemsSentToStoresReport.txt'.\n");
         saveReportToFile("ItemsSentToStoresReport.txt", report.toString());
     }
 
-/**
- * Generates a report of all transactions recorded in the inventory management system.
- * @param transactionsManager The TransactionsManager object used 
- * to retrieve transaction information.
- */
-public void generateAllTransactionsReport(TransactionsManager transactionsManager) {
-    List<Transaction> transactions = transactionsManager.getTransactions();
-    StringBuilder report = new StringBuilder();
-    report.append("All Transactions Report:\n");
-    for (Transaction transaction : transactions) {
-        report.append("Transaction ID: ").append(transaction.getID()).append("\n");
-        report.append("Date: ").append(transaction.getDate()).append("\n");
-        report.append("Transaction Type: ").append(transaction.getTransactionType()).append("\n");
-        report.append("Products: \n");
-        for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()) {
-            Product product = entry.getKey();
-            int numberOfItems = entry.getValue();
-            report.append(product.getName()).append(" (ID: ").append(product.getID()).
-                   append(") - Quantity: ").append(numberOfItems).append("\n");
+    /**
+     * Generates a report of all transactions recorded in the inventory management system
+     * and saves it to a file.
+     * @param transactionsManager The TransactionsManager object used
+     *                            to retrieve transaction information.
+     * @param stockManager        The StockManager object used to retrieve stock information.
+     */
+    public void generateAllTransactionsReport(TransactionsManager transactionsManager, StockManager stockManager) {
+        List<Transaction> transactions = transactionsManager.getTransactions();
+        StringBuilder report = new StringBuilder();
+        report.append("All Transactions Report:\n").
+        append("Products appear in the format: name(id): amount\n");
+        for (Transaction transaction : transactions) {
+            report.append("Transaction ID: ").append(transaction.getID()).append("\n");
+            report.append("Date: ").append(transaction.getDate()).append("\n");
+            report.append("Transaction Type: ").append(transaction.getTransactionType()).append("\n");
+            report.append("Products: \n");
+            for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()) {
+                Product product = entry.getKey();
+                int numberOfItems = entry.getValue();
+                report.append(product.getName()).append(" (").append(product.getID()).
+                        append("): ").append(numberOfItems).append("\n");
+            }
+            if (transaction instanceof OutgoingTransaction) {
+                OutgoingTransaction outgoingTransaction = (OutgoingTransaction) transaction;
+                int storeID = outgoingTransaction.getStoreID();
+                Store store = stockManager.getStoreByID(storeID);
+                if (store != null) {
+                    report.append("Store: ").append(store.getName()).append(" (ID: ").
+                            append(store.getID()).append("): ").append(store.getAddress()).append("\n");
+                } else {
+                    report.append("Store: [Unknown Store] (ID: ").append(storeID).append(")\n");
+                }
+            }
+            report.append("-----------------------------------\n");
         }
-        if (transaction instanceof OutgoingTransaction) {
-            OutgoingTransaction outgoingTransaction = (OutgoingTransaction) transaction;
-            report.append("Store ID: ").append(outgoingTransaction.getStoreID()).append("\n");
-        }
-        report.append("-----------------------------------\n");
+        saveReportToFile("AllTransactionsReport.txt", report.toString());
+        System.out.println("All Transactions Report saved to 'AllTransactionsReport.txt'.");
     }
-    System.out.println(report.toString());
-    saveReportToFile("AllTransactionsReport.txt", report.toString());
-}
 
-/**
- * Utility method to save a report to a file.
- *
- * @param fileName The name of the file to save the report.
- * @param report   The content of the report to be saved.
- */
-private void saveReportToFile(String fileName, String report) {
-    try (FileWriter fileWriter = new FileWriter(fileName)) {
-        fileWriter.write(report);
-    } catch (IOException e) {
-        e.printStackTrace();
+    /**
+    * Utility method to save a report to a file.
+    * @param fileName The name of the file to save the report.
+    * @param report   The content of the report to be saved.
+    */
+    private void saveReportToFile(String fileName, String report) {
+        try (FileWriter fileWriter = new FileWriter(fileName)) {
+            fileWriter.write(report);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
-}
 }

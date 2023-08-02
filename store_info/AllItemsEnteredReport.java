@@ -25,6 +25,7 @@ public class AllItemsEnteredReport implements Report {
     @Override
     public void printReport() {
         System.out.println("All Items Entered Report:");
+        System.out.println("Products appear in the format: name(id): amount\n");
         List<Transaction> transactions = transactionsManager.getTransactions();
         for (Transaction transaction : transactions) {
             if (transaction instanceof IncomingTransaction) {
@@ -34,11 +35,39 @@ public class AllItemsEnteredReport implements Report {
                 for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()) {
                     Product product = entry.getKey();
                     int numberOfItems = entry.getValue();
-                    System.out.println(product.getName() + " (ID: " + product.getID() + ") - Quantity: " + numberOfItems);
+                    System.out.println(product.getName() + " (" + product.getID() + "): " + numberOfItems);
                 }
                 System.out.println("-----------------------------------");
             }
         }
+        System.out.println("\nReport saved to AllItemsEnteredReport.txt\n");
+    }
+
+    /**
+     * Write the report of all incoming items in the inventory to a txt file.
+     * The report displays the name, ID, and available quantity of each product.
+     */
+    @Override
+    public String reportMe() {
+        StringBuilder report = new StringBuilder();
+        report.append("All Items Entered Report:\n").
+        append("Products appear in the format: name(id): amount\n");
+        List<Transaction> transactions = transactionsManager.getTransactions();
+        for (Transaction transaction : transactions) {
+            if (transaction instanceof IncomingTransaction) {
+                report.append("Transaction ID: ").append(transaction.getID()).append("\n");
+                report.append("Date: ").append(transaction.getDate()).append("\n");
+                report.append("Products: \n");
+                for (Map.Entry<Product, Integer> entry : transaction.getProductList().entrySet()) {
+                    Product product = entry.getKey();
+                    int numberOfItems = entry.getValue();
+                    report.append(product.getName()).append(" (").append(product.getID()).append("): ")
+                          .append(numberOfItems).append("\n");
+                }
+                report.append("-----------------------------------\n");
+            }
+        }
+        return report.toString();
     }
     
      /**

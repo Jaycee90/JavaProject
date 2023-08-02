@@ -127,7 +127,7 @@ public class Main {
                         }
                         else{
                             OutgoingTransaction outgoingTransaction = new OutgoingTransaction
-                            (transactionsManager.getNextTransactionID(), new Date(), storeID);
+                            (transactionsManager.getNextTransactionID(), new Date(), storeID,  selectedStore.getAddress());
                             outgoingTransaction.addProduct(selectedProduct, quantity);
 
                             // Deduct the quantity from the warehouse and add it to the store
@@ -178,18 +178,19 @@ public class Main {
                                 for (Map.Entry<Product, Integer> entry : productList.entrySet()) {
                                     Product myProd = entry.getKey();
                                     int numberOfItems = entry.getValue();
-                                    System.out.println(myProd.getName() + " (ID: " + myProd.getID() + 
+                                    System.out.println(myProd.getName() + " (ID:" + myProd.getID() + 
                                                                      ") - Quantity: " + numberOfItems);
                                 }
 
                             if (transaction instanceof OutgoingTransaction) {
                                 OutgoingTransaction outgoingTransaction = (OutgoingTransaction) transaction;
-                                System.out.println("Store ID: " + outgoingTransaction.getStoreID());
+                                System.out.println("Store (" + outgoingTransaction.getStoreID() + "), Address: " + 
+                                outgoingTransaction.getStoreAddr());
                             }
 
                             System.out.println("-----------------------------------");
                             }
-                            reportsManager.generateAllTransactionsReport(transactionsManager);
+                            reportsManager.generateAllTransactionsReport(transactionsManager,stockManager);
                             break;
 
                         case "x":

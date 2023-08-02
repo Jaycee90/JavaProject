@@ -11,16 +11,19 @@ import java.util.Map;
  */
 public class OutgoingTransaction extends Transaction {
     private int storeID;
+    private String storeAddr;
 
     /**
      * Default constructor to initialize outgoing transactions.
      * @param ID      The unique identifier for the outgoing transaction.
      * @param date    The date of the outgoing transaction.
      * @param storeID The identification number of the store where the items are sent.
+     * @param storeAddr The address of the store where the items are sent.
      */
-    public OutgoingTransaction(int ID, Date date, int storeID) {
+    public OutgoingTransaction(int ID, Date date, int storeID, String storeAddr) {
         super(ID, date, "Outgoing");
         this.storeID = storeID;
+        this.storeAddr = storeAddr;
     }
 
     /**
@@ -29,6 +32,14 @@ public class OutgoingTransaction extends Transaction {
      */
     public int getStoreID(){
         return storeID;
+    }
+
+      /**
+     * Getter for store Address
+     * @return the identification address of store where the items are sent
+     */
+    public String getStoreAddr(){
+        return storeAddr;
     }
 
     /**
@@ -62,8 +73,8 @@ public class OutgoingTransaction extends Transaction {
             for (Map.Entry<Product, Integer> entry : getProductList().entrySet()) {
                 Product product = entry.getKey();
                 int numberOfItems = entry.getValue();
-                transactionDetails.append(product.getName()).append(" (ID: ").append(product.getID()).
-                                    append(") - Quantity: ").append(numberOfItems).append("\n");
+                transactionDetails.append(product.getName()).append(" (").append(product.getID()).
+                                    append("): ").append(numberOfItems).append("\n");
             }
             transactionDetails.append("-----------------------------------\n");
     

@@ -14,4 +14,10 @@ public interface Report {
      */
     void printReport();
 
+     /*
+     * Generates the specific report based on store data and write it 
+     * to a .txt file.
+     */
+    String reportMe();
+
 }
