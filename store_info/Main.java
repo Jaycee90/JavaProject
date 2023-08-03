@@ -19,7 +19,7 @@ public class Main {
      * such as adding products, adding stores, performing incoming and outgoing transactions,
      * generating reports, and exiting the program.
      *
-     * @param args Command-line arguments (not used in this application).
+     * @param args Command-line arguments.
      */
 
     public static void main(String[] args) {
